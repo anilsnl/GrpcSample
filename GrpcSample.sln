@@ -12,9 +12,16 @@ ProjectSection(SolutionItems) = preProject
 	src\Protos\unary.proto = src\Protos\unary.proto
 	src\Protos\serverSideStreaming.proto = src\Protos\serverSideStreaming.proto
 	src\Protos\clientSideStreaming.proto = src\Protos\clientSideStreaming.proto
+	src\Protos\bidirectionalStraming.proto = src\Protos\bidirectionalStraming.proto
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "src\Client\Client.csproj", "{4DFB1AE1-0310-4484-8237-1AF4A3C5A15D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{61769A52-549D-4E9E-9A48-3409C2AC4481}"
+ProjectSection(SolutionItems) = preProject
+	LICENSE = LICENSE
+	README.md = README.md
+EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

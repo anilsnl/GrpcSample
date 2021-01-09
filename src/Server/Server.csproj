@@ -13,6 +13,7 @@
         <Protobuf Include="..\Protos\unary.proto" GrpcServices="Server" />
         <Protobuf Include="..\Protos\clientSideStreaming.proto" GrpcServices="Server" />
         <Protobuf Include="..\Protos\serverSideStreaming.proto" GrpcServices="Server" />
+        <Protobuf Include="..\Protos\bidirectionalStraming.proto" GrpcServices="Server" />
     </ItemGroup>
 
 </Project>
