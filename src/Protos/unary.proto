@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "Server.Abstract";
+
+package unary;
+
+// The service is sample of Unary compunction.
+service Unary {
+  // Get country info by code.
+  rpc GetCountryByCode (GetCountryByCodeRequest) returns (GetCountryByCodeReply);
+}
+
+message GetCountryByCodeRequest {
+  string code = 1;
+}
+message GetCountryByCodeReply {
+  string code = 1;
+  string name = 2;
+  int64 population = 3;
+}

@@ -1,0 +1,26 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Server.Abstract";
+
+package clientSideStreaming;
+
+// The service is sample of client site streaming example.
+service ClientSideStreaming {
+  // Get coin stack exchange info by source currency..
+  rpc SendLog (stream SendLogRequest) returns (SendLogReply);
+}
+
+message SendLogRequest {
+  string logData = 1;
+  LogType logType = 2;
+}
+enum LogType {
+  info = 0;
+  critical = 3;
+  warming = 1;
+  error = 2;
+}
+message SendLogReply{
+  bool isDelivered = 1;
+}
+    

@@ -1,0 +1,25 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Server.Abstract";
+
+package serverSideStreaming;
+
+// The service is sample of server site streaming example.
+service ServerSideStreaming {
+  // Get coin stack exchange info by source currency..
+  rpc GetImmediateCoinData (GetImmediateCoinDataRequest) returns (stream GetImmediateCoinDataReply);
+}
+
+message GetImmediateCoinDataRequest {
+    string sourceCurrencyCode = 1;
+}
+
+message GetImmediateCoinDataReply{
+  repeated GetImmediateCoinDataReplyDataItem coinDataList = 1;
+}
+
+message GetImmediateCoinDataReplyDataItem{
+  string coinCode = 1;
+  double value = 2;
+}
+    
