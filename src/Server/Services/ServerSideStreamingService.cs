@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Server.Abstract;
 
 namespace Server.Services
@@ -10,10 +11,11 @@ namespace Server.Services
     /// <summary>
     /// gRPC Serverside streaming sample service.
     /// </summary>
+    [Authorize]
     public class ServerSideStreamingService : ServerSideStreaming.ServerSideStreamingBase
     {
         /// <summary>
-        /// 
+        /// Gets Immediate Coin Data.
         /// </summary>
         /// <param name="request"></param>
         /// <param name="responseStream"></param>

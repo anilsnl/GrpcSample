@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using Server.Abstract;
 
@@ -8,6 +9,7 @@ namespace Server.Services
     /// <summary>
     /// gRPC Serverside streaming sample service.
     /// </summary>
+    [Authorize]
     public class ClientSideStreamingService : ClientSideStreaming.ClientSideStreamingBase
     {
         private readonly ILogger _logger;
@@ -50,7 +52,6 @@ namespace Server.Services
                         throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid log type."));
                 }
             }
-
             return new SendLogReply()
             {
                 IsDelivered = true

@@ -4,10 +4,15 @@ option csharp_namespace = "Server.Abstract";
 
 package unary;
 
+import "google/protobuf/timestamp.proto";
+
+
 // The service is sample of Unary compunction.
 service Unary {
   // Get country info by code.
   rpc GetCountryByCode (GetCountryByCodeRequest) returns (GetCountryByCodeReply);
+  rpc Login (LoginRequest) returns (LoginReply);
+  rpc Register (RegisterRequest) returns (RegisterReply);
 }
 
 message GetCountryByCodeRequest {
@@ -17,4 +22,24 @@ message GetCountryByCodeReply {
   string code = 1;
   string name = 2;
   int64 population = 3;
+}
+
+
+message LoginRequest {
+  string userName = 1;
+  string password = 2;
+}
+
+message LoginReply{
+  string AccessToken = 1;
+  google.protobuf.Timestamp ExpiryOn = 2;
+  string userName = 3;
+}
+
+message RegisterRequest{
+  string userName = 1;
+  string password = 2;
+}
+message RegisterReply{
+  bool isSuccess = 1;
 }

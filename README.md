@@ -1,7 +1,11 @@
 # GrpcSample
 This sample app contains all types of gRPC services. 
 
-In this sample app .NET 5 is used in botch client and server application.
+In this sample app .NET 5 is used in botch client and server application. The following aspects is included in the app...
+
+1. gRPC Authentication - JWT is preferred as authorization method.
+2. gRPC Exception handling.
+4. All types of gRPC communication witch are unary, clientside & serverside streaming, bidirectional.
 
 ## Unary
 Unary is basically classic REST request. You send a single request and get a single response. In this example I use simple api that take a country code and returns some info about that country.
