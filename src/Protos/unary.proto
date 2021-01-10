@@ -2,10 +2,12 @@ syntax = "proto3";
 
 option csharp_namespace = "Server.Abstract";
 
-package unary;
+
 
 import "google/protobuf/timestamp.proto";
 
+
+package unary;
 
 // The service is sample of Unary compunction.
 service Unary {

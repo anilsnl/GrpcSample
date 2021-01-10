@@ -28,7 +28,7 @@ namespace Client
                 {
                     GetAuthorizedGrpcChannel();
                     Console.WriteLine("Select the connection method type!");
-                    Console.WriteLine("1. Unary\n2. Serverside Streaming\n3. Clientside Streaming\n3. Bidirectional");
+                    Console.WriteLine("1. Unary\n2. Serverside Streaming\n3. Clientside Streaming\n4. Bidirectional");
                     switch (Console.ReadLine())
                     {
                         case "1":
@@ -40,6 +40,9 @@ namespace Client
                         case "3":
                             await ClientsideStreamingCallAsync();
                             break;
+                        case "4":
+                            await BidirectionalCallAsync();
+                            break;
                         default:
                             Console.WriteLine("Invalid operation!\nRetry, press Ctrl+C to exist.");
                             break;
@@ -49,7 +52,8 @@ namespace Client
             catch (RpcException e)
             {
                 Console.WriteLine($"Status: {e.Status}");
-                Console.WriteLine("Retry, press Ctrl+C to Exit!");
+                Console.WriteLine("Retry, press Ctrl+C to Exit, press any key to retry!");
+                Console.ReadKey();
                 await Main(args);
             }
             catch (Exception e)
@@ -114,6 +118,34 @@ namespace Client
             Console.WriteLine($"The logging server response is {response.IsDelivered}");
         }
 
+        private static async Task BidirectionalCallAsync()
+        {
+            Console.WriteLine("Starting chat service...");
+            using var channel = GetAuthorizedGrpcChannel();
+            var client = new BidirectionalStreaming.BidirectionalStreamingClient(channel);
+            var connection = client.StartChant(Metadata.Empty);
+            var responseTask = Task.Run(async () =>
+            {
+                while (true)
+                {
+                    var message = Console.ReadLine();
+                    await connection.RequestStream.WriteAsync(new StartChantRequest()
+                    {
+                        Message = message
+                    });
+                }
+            });
+
+            while (await connection.ResponseStream.MoveNext())
+            {
+                Console.WriteLine(
+                    $"{connection.ResponseStream.Current.UserName}: {connection.ResponseStream.Current.Message}\n");
+            }
+
+
+            await responseTask;
+        }
+
         private static GrpcChannel GetAuthorizedGrpcChannel()
         {
             while (_loginReply == null || _loginReply.ExpiryOn.ToDateTimeOffset() <= DateTimeOffset.Now)
@@ -122,7 +154,7 @@ namespace Client
                 string username, password;
                 Console.Clear();
                 Console.WriteLine(
-                    "You've to login to be able continue using the app!! \n1. Login 2. Register\nType the operation code: ");
+                    "You've to login to be able to continue using the app!! \n1. Login 2. Register\nType the operation code: ");
                 switch (Console.ReadLine())
                 {
                     case "1":

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Server.Data;
 using Server.Extensions;
 using Server.Security.Jwt;
 using Server.Services;
@@ -39,6 +34,7 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ITokenHelper, TokenHelper>();
+            services.AddSingleton<IChatHandler, ChatHandler>();
             services.ConfigureAppAuthentication(Configuration);
             services.AddGrpc();
         }
@@ -63,6 +59,7 @@ namespace Server
                 endpoints.MapGrpcService<UnaryService>();
                 endpoints.MapGrpcService<ServerSideStreamingService>();
                 endpoints.MapGrpcService<ClientSideStreamingService>();
+                endpoints.MapGrpcService<BidirectionalService>();
 
                 endpoints.MapGet("/",
                     async context =>
